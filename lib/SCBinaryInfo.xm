@@ -74,7 +74,7 @@
 static CSArchitecture architectureForName(const char *name) {
     CSArchitecture arch;
 
-    if (strcmp(name, "arm64") == 0) {
+    if (strcmp(name, "arm64") == 0 || strcmp(name, "arm64e") == 0) {
         arch.cpu_type = CPU_TYPE_ARM64;
         arch.cpu_subtype = CPU_SUBTYPE_ARM64_ALL;
     } else if (
@@ -230,7 +230,8 @@ CFUUIDRef CFUUIDCreateFromUnformattedCString(const char *string) {
 //       symbol. Therefore, this method must not rely on CoreSymbolication.
 - (NSArray *)methods {
     if (methods_ == nil) {
-        if (!hasExtractedMethods_) {
+       if (!hasExtractedMethods_) 
+       {
             hasExtractedMethods_ = YES;
 
             CSArchitecture arch = architectureForName([[self architecture] UTF8String]);

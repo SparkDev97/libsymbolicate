@@ -69,6 +69,7 @@ CFComparisonResult reverseCompareUnsignedLongLong(CFNumberRef a, CFNumberRef b) 
 }
 
 - (SCSymbolInfo *)symbolInfoForAddress:(uint64_t)address inBinary:(SCBinaryInfo *)binaryInfo {
+
     SCSymbolInfo *symbolInfo = nil;
 
     if (binaryInfo != nil) {

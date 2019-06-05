@@ -24,7 +24,7 @@
 //       Struct declarations have been altered to allow accessing only required
 //       information, and to differentiate 32 and 64 bit versions.
 
-struct objc_class {
+struct objc_class_2 {
     uint32_t isa; // Actually declared in superstruct objc_object.
     uint32_t superclass;
     uint32_t buckets; // Part of cache_t struct.
@@ -38,7 +38,7 @@ struct objc_class {
     }
 };
 
-struct objc_class_64 {
+struct objc_class_2_64 {
     uint64_t isa; // Actually declared in superstruct objc_object.
     uint64_t superclass;
     uint64_t buckets; // Part of cache_t struct.
@@ -179,7 +179,7 @@ static NSArray *methodsForMappedMemory32(uint8_t *memory) {
         uint32_t *classList = reinterpret_cast<uint32_t *>(memory + objcClassListSect->offset);
         const uint32_t numClasses = objcClassListSect->size / sizeof(uint32_t);
         for (uint32_t i = 0; i < numClasses; ++i) {
-            objc_class *klass = reinterpret_cast<objc_class *>(memory + classList[i] - vmdiff_data);
+            objc_class_2 *klass = reinterpret_cast<objc_class_2 *>(memory + classList[i] - vmdiff_data);
 
 process_class:
             class_ro_t *klass_ro = reinterpret_cast<class_ro_t *>(memory + klass->data() - vmdiff_data);
@@ -223,7 +223,8 @@ process_class:
             if (!(flags & RO_META)) {
                 // Process meta class.
                 // NOTE: This is needed for retrieving class (non-instance) methods.
-                klass = reinterpret_cast<objc_class *>(memory + klass->isa - vmdiff_data);
+                //unsigned char * isa = (unsigned char *) klass->isa;
+                klass = reinterpret_cast<objc_class_2 *>(memory + klass->isa - vmdiff_data);
                 goto process_class;
             }
         }
@@ -275,8 +276,7 @@ static NSArray *methodsForMappedMemory64(uint8_t *memory) {
         uint64_t *classList = reinterpret_cast<uint64_t *>(memory + objcClassListSect->offset);
         const uint64_t numClasses = objcClassListSect->size / sizeof(uint64_t);
         for (uint64_t i = 0; i < numClasses; ++i) {
-            objc_class_64 *klass = reinterpret_cast<objc_class_64 *>(memory + classList[i] - vmdiff_data);
-
+            objc_class_2_64 *klass = reinterpret_cast<objc_class_2_64 *>(memory + classList[i] - vmdiff_data);
 process_class:
             class_ro_64_t *klass_ro = reinterpret_cast<class_ro_64_t *>(memory + klass->data() - vmdiff_data);
 
@@ -319,7 +319,7 @@ process_class:
             if (!(flags & RO_META)) {
                 // Process meta class.
                 // NOTE: This is needed for retrieving class (non-instance) methods.
-                klass = reinterpret_cast<objc_class_64 *>(memory + klass->isa - vmdiff_data);
+                klass = reinterpret_cast<objc_class_2_64 *>(memory + klass->isa - vmdiff_data);
                 goto process_class;
             }
         }
@@ -361,7 +361,6 @@ NSArray *methodsForBinaryFile(const char *filepath, cpu_type_t cputype, cpu_subt
         } else {
             methods = methodsForMappedMemory64(memory);
         }
-
         if ([methods count] == 0) {
             fprintf(stderr, "WARNING: Unable to extract methods or no methods exist in file: %s\n", filepath);
         }

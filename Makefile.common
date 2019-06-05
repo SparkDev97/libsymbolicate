@@ -4,18 +4,18 @@ PKG_ID = jp.ashikase.libsymbolicate
 libsymbolicate_INSTALL_PATH = /usr/lib
 libsymbolicate_OBJC_FILES = \
     Libraries/launch-cache/dsc_iterator.cpp \
-    lib/SCBinaryInfo.mm \
+    lib/SCBinaryInfo.xm \
     lib/SCMethodInfo.mm \
-    lib/SCSymbolicator.mm \
+    lib/SCSymbolicator.xm \
     lib/SCSymbolInfo.mm \
     lib/binary.mm \
     lib/demangle.mm \
     lib/sharedCache.mm \
     lib/methods.mm
 libsymbolicate_PRIVATE_FRAMEWORKS = CoreSymbolication Symbolication
-ADDITIONAL_CFLAGS = -DPKG_ID=\"$(PKG_ID)\" -ILibraries -Iinclude -Wno-unused-local-typedef
+ADDITIONAL_CFLAGS = -DPKG_ID=\"$(PKG_ID)\" -ILibraries -Iinclude -Wno-unused-local-typedef -Wno-deprecated-declarations
 
-include theos/makefiles/common.mk
+include $(THEOS)/makefiles/common.mk
 include $(THEOS)/makefiles/library.mk
 
 after-stage::

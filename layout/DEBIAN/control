@@ -1,6 +1,6 @@
 Package: jp.ashikase.libsymbolicate
 Name: libsymbolicate
-Version: 1.9.0
+Version: 1.9.1~SparkDev
 Description: Library to symbolicate memory addresses.
     This library is based upon CrashReporter by kennytm.
 Architecture: iphoneos-arm

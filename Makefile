@@ -1,8 +1,11 @@
+export THEOS_DEVICE_IP = localhost
+export THEOS_DEVICE_PORT = 2222
+
 build:
-	make -f Makefile.x86_64
+	#make -f Makefile.x86_64
 	make -f Makefile.arm
-	lipo -create obj/libsymbolicate.dylib obj/macosx/libsymbolicate.dylib -output libsymbolicate.dylib
-	mv libsymbolicate.dylib obj/libsymbolicate.dylib
+	#lipo -create .theos/obj/debug/libsymbolicate.dylib obj/macosx/libsymbolicate.dylib -output libsymbolicate.dylib
+	#mv libsymbolicate.dylib obj/libsymbolicate.dylib
 
 clean:
 	make -f Makefile.x86_64 clean
