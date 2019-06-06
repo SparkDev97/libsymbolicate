@@ -369,7 +369,6 @@ NSArray *methodsForBinaryFile(const char *filepath, cpu_type_t cputype, cpu_subt
     } else {
         fprintf(stderr, "ERROR: Failed to mmap file: %s\n", filepath);
     }
-
     return [methods sortedArrayUsingFunction:(NSInteger (*)(id, id, void *))reversedCompareMethodInfos context:NULL];
 }
 

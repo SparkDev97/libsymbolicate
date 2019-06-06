@@ -80,6 +80,7 @@ CFComparisonResult reverseCompareUnsignedLongLong(CFNumberRef a, CFNumberRef b) 
             // NOTE: Only possible if LC_FUNCTION_STARTS exists in the binary.
             uint64_t symbolAddress = 0;
             NSArray *symbolAddresses = [binaryInfo symbolAddresses];
+
             NSUInteger count = [symbolAddresses count];
             if (count != 0) {
                 NSNumber *targetAddress = [[NSNumber alloc] initWithUnsignedLongLong:address];
